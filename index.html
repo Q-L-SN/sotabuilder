@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOTABuilder - AI公司CEO模拟器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-shell">
+    <header>
+      <h1>SOTABuilder · AI 公司 CEO 模拟器</h1>
+      <p class="subtitle">横屏体验最佳，请将设备旋转至横向。</p>
+      <div class="top-stats">
+        <div class="stat" id="stat-month">第 1 月</div>
+        <div class="stat" id="stat-cash">现金：¥100,000</div>
+        <div class="stat" id="stat-income">月收入：¥25,000</div>
+        <div class="stat" id="stat-gpu">GPU：8 张</div>
+        <div class="stat" id="stat-contract-income">合同收入：¥0</div>
+        <div class="stat" id="stat-reputation">声誉：55</div>
+        <div class="stat" id="stat-compliance">合规：80</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" id="talent-market">
+        <h2>人才市场</h2>
+        <p>每月刷新候选人。调整薪资满足他们的预期，否则可能跳槽。</p>
+        <div id="candidate-list" class="card-grid"></div>
+        <button id="refresh-candidates" class="secondary">刷新候选人 (¥5,000)</button>
+      </section>
+
+      <section class="panel" id="company-ops">
+        <div class="panel-group">
+          <div class="sub-panel">
+            <h2>员工与部门</h2>
+            <div id="employee-list" class="card-grid"></div>
+          </div>
+          <div class="sub-panel">
+            <h2>训练计划</h2>
+            <form id="training-form" class="form-grid">
+              <label>模型名称
+                <input type="text" id="model-name" placeholder="如：Aurora-7B" required>
+              </label>
+              <label>目标基准
+                <select id="model-benchmark">
+                  <option value="MMLU">MMLU</option>
+                  <option value="CMMLU">CMMLU</option>
+                  <option value="C-Eval">C-Eval</option>
+                  <option value="AGI-Safety">AGI-Safety</option>
+                </select>
+              </label>
+              <label>训练策略
+                <select id="model-strategy">
+                  <option value="高质量指令微调">高质量指令微调</option>
+                  <option value="对齐优先">对齐优先</option>
+                  <option value="长上下文">长上下文</option>
+                  <option value="多模态增强">多模态增强</option>
+                </select>
+              </label>
+              <label>模型架构
+                <select id="model-arch">
+                  <option value="Transformer">Transformer</option>
+                  <option value="Mixture-of-Experts">Mixture-of-Experts</option>
+                  <option value="RNN混合">RNN 混合</option>
+                  <option value="稀疏注意力">稀疏注意力</option>
+                </select>
+              </label>
+              <label>计划训练月数
+                <input type="number" id="model-duration" min="1" max="12" value="3">
+              </label>
+              <button type="submit" class="primary">安排训练</button>
+            </form>
+            <div id="model-list" class="card-grid"></div>
+          </div>
+          <div class="sub-panel">
+            <h2>基础设施</h2>
+            <p>购买更多 GPU 可以提升训练速度，但成本高昂。</p>
+            <div class="gpu-actions">
+              <button id="buy-gpu" class="primary">采购 8 张 GPU (¥50,000)</button>
+              <button id="upgrade-cluster" class="secondary">扩展算力上限 (¥35,000)</button>
+            </div>
+          </div>
+          <div class="sub-panel">
+            <h2>数据资产</h2>
+            <p>高质量数据与授权协议会影响模型表现与监管风险。</p>
+            <div>
+              <h3>已持有</h3>
+              <div id="dataset-owned" class="card-grid compact"></div>
+            </div>
+            <div>
+              <h3>可采购</h3>
+              <div id="dataset-offers" class="card-grid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="intel">
+        <div class="sub-panel">
+          <h2>评估与发布</h2>
+          <div class="evaluation">
+            <button id="public-eval" class="primary">公开基准测试 (¥8,000)</button>
+            <button id="private-eval" class="secondary">私有集密评 (¥20,000)</button>
+          </div>
+          <div id="evaluation-log" class="log"></div>
+        </div>
+        <div class="sub-panel">
+          <h2>竞情报</h2>
+          <div id="competitor-list" class="card-grid"></div>
+        </div>
+        <div class="sub-panel">
+          <h2>市场与客户</h2>
+          <div>
+            <h3>潜在合同</h3>
+            <div id="contract-offers" class="card-grid"></div>
+          </div>
+          <div>
+            <h3>合同执行</h3>
+            <div id="active-contracts" class="card-grid compact"></div>
+          </div>
+        </div>
+        <div class="sub-panel">
+          <h2>治理与合规</h2>
+          <p>保持透明度与负责任 AI 审查以稳固声誉。</p>
+          <div class="governance-actions">
+            <button id="action-ethics" class="secondary">开展负责任 AI 审查 (¥12,000)</button>
+            <button id="action-pr" class="secondary">发布可信度白皮书 (¥18,000)</button>
+          </div>
+          <div id="governance-log" class="log"></div>
+        </div>
+        <div class="sub-panel">
+          <h2>月度回顾</h2>
+          <div id="monthly-log" class="log"></div>
+          <button id="next-month" class="primary wide">进入下个月</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>提示：当你的模型在私有集达到行业领先时，收入会飙升。谨慎管理现金流与士气！</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
